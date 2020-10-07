@@ -10,10 +10,11 @@ class LongIntMult{
     int base = 10;
     std::vector<int> digits;
     std::vector<int> split(int a);
-    std::vector<int> shift(std::vector<int> a, int m);
+    std::vector<int> shift(std::vector<int> a, int pow, int len_of_base);
     int join(std::vector<int> res);
     std::vector<int> add(std::vector<int> a, std::vector<int> b);
     std::vector<int> subtract(std::vector<int> a, std::vector<int> b);
+    int len_base(std::vector<int> a, std::vector<int> b);
 
 
 public:
