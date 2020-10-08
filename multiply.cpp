@@ -5,6 +5,7 @@
 #include "multiply.h"
 
 std::vector<int> Karatsuba::multiply(std::vector<int> &a, std::vector<int> &b) {
+
     /*vector_len_check(a,b);
     //std::cout<<depth<<std::endl;
     if(a.size()==1 && b.size()==1){
