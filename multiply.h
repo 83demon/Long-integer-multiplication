@@ -8,6 +8,7 @@
 
 class Multiply{
 public:
+
     virtual std::vector<int> multiply(std::vector<int> &a, std::vector<int> &b);
 };
 

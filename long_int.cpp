@@ -10,7 +10,6 @@
 #include <cstring>
 #include <algorithm>
 
-
 std::string LongIntMult::mult_method; // definition of static method
 
 

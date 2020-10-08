@@ -9,6 +9,7 @@
 #include <string>
 
 class LongIntMult{
+
     int base = 10;
     std::vector<int> digits;
     static std::string mult_method;

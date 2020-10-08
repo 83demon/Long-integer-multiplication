@@ -6,6 +6,7 @@
 #define LAB_2_VECTOR_TOOLS_H
 #include <vector>
 
+
 std::vector<int> slice_with_check(std::vector<int> const &v, int part);
 std::vector<int> vector_slice(std::vector<int> const &v, int m, int n);
 std::vector<int> copy_vector(std::vector<int> const &vec);

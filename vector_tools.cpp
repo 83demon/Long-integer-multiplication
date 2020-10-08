@@ -7,6 +7,7 @@
 #include <cmath>
 
 bool equal_elems(std::vector<int> a){
+
     bool res = true;
     int fist_occur = a[0];
     for(int i : a){
