@@ -9,8 +9,8 @@
 bool equal_elems(std::vector<int> a){
     bool res = true;
     int fist_occur = a[0];
-    for(int i=0;i<a.size();i++){
-        if(fist_occur!=a[i]){
+    for(int i : a){
+        if(fist_occur!=i){
             res = false;
         }
     }
