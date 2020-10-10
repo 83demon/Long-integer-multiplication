@@ -17,11 +17,12 @@ Multiplication *LongIntMult::multiplication = nullptr; // definition of static m
 
 LongIntMult Multiplication::multiply(std::vector<int> &a, std::vector<int> &b) {}
 
-/*
+
 void LongIntMult::stress_test(int len_vector) {
     std::vector<int> a;
     std::vector<int> b;
     std::vector<int> naive_res;
+    LongIntMult fast_res_obj;
     std::vector<int> fast_res;
     while(true) {
         for (int i = 0; i < len_vector; i++) {
@@ -36,9 +37,10 @@ void LongIntMult::stress_test(int len_vector) {
         double difference1 = std::chrono::duration<double, std::milli>(end1-start1).count();
 
         auto start2 = std::chrono::high_resolution_clock::now();
-        fast_res = karatsuba(a, b);
+        fast_res_obj = multiplication->multiply(a, b);
         auto end2 = std::chrono::high_resolution_clock::now();
         double difference2 = std::chrono::duration<double, std::milli>(end2-start2).count();
+        fast_res = fast_res_obj.digits;
 
 
         if(naive_res==fast_res){
@@ -71,7 +73,7 @@ void LongIntMult::stress_test(int len_vector) {
         }
 
     }
-}*/
+}
 
 
 void LongIntMult::set_base(int num) {

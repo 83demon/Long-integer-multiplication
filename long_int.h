@@ -36,7 +36,7 @@ public:
     LongIntMult (std::vector<int> &res){digits=res;};
     LongIntMult(auto num){operator=(num);};
     LongIntMult(){};
-    //void stress_test(int len_vector);
+    void stress_test(int len_vector);
     friend class Karatsuba;
 };
 
