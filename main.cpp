@@ -14,11 +14,11 @@ int main() {
     b = 448949815;
 
 
-    //c.stress_test(3000);
+    c.stress_test(20);
 
 
-    c = a*b;
-    std::cout<<c;
+    //c = a*b;
+    //std::cout<<c;
 
 
     return 0;
