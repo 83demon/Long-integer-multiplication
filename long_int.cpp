@@ -5,16 +5,76 @@
 #include "long_int.h"
 #include "vector_tools.h"
 #include <vector>
+#include <random>
 #include <iostream>
 #include <ostream>
 #include <cstring>
 #include <algorithm>
+#include <chrono>
 
+int LongIntMult::base;
 std::string LongIntMult::mult_method; // definition of static method
 
 void LongIntMult::stress_test(int len_vector) {
-    
+    std::vector<int> a;
+    std::vector<int> b;
+    std::vector<int> naive_res;
+    std::vector<int> fast_res;
+    while(true) {
+        for (int i = 0; i < len_vector; i++) {
+            a.push_back(rand() % base);
+            b.push_back(rand() % base);
+        }
+
+
+        auto start1 = std::chrono::high_resolution_clock::now();
+        naive_res = naive_multiplication(a, b);
+        auto end1 = std::chrono::high_resolution_clock::now();
+        double difference1 = std::chrono::duration<double, std::milli>(end1-start1).count();
+
+        auto start2 = std::chrono::high_resolution_clock::now();
+        fast_res = karatsuba(a, b);
+        auto end2 = std::chrono::high_resolution_clock::now();
+        double difference2 = std::chrono::duration<double, std::milli>(end2-start2).count();
+
+
+        if(naive_res==fast_res){
+            std::cout<<"OK\t"<<difference1<<"\t"<<difference2<<std::endl;
+            a.clear();
+            b.clear();
+        }
+        else{
+            for(auto i:a){
+                std::cout<<i;
+            }
+            std::cout<<" a"<<"\n";
+
+            for(auto i:b){
+                std::cout<<i;
+            }
+            std::cout<<" b"<<"\n";
+
+            for(auto i:naive_res){
+                std::cout<<i;
+            }
+            std::cout<<" naive_res"<<"\n";
+
+            for(auto i:fast_res){
+                std::cout<<i;
+            }
+            std::cout<<" fast_res"<<"\n";
+
+            break;
+        }
+
+    }
 }
+
+
+void LongIntMult::set_base(int num) {
+    base = num;
+}
+
 
 void LongIntMult::set_mult(const char *method) {
     mult_method = method;
@@ -64,27 +124,8 @@ void LongIntMult::operator=(const char *num){
     }
 }
 
-int LongIntMult::len_base(std::vector<int> a, std::vector<int> b){
-    //seeks for the min len of base
-    int res;
-    bool equals_a = equal_elems(a), equals_b = equal_elems(b);
-    if(equals_a && equals_b && a[0]==b[0] &&a[0]==0){
-        res = std::min(a.size(),b.size());
-    }
-    else if(equals_a && a[0]==0){
-        res = b.size();
-    }
-    else if(equals_b && b[0]==0){
-        res = a.size();
-    }
-    else{
-        res = std::min(a.size(),b.size());
-    }
-    return res;
-}
 
-
-std::vector<int> LongIntMult::multiplication(std::vector<int> a, std::vector<int> b) {
+std::vector<int> LongIntMult::naive_multiplication(std::vector<int> a, std::vector<int> b) {
     std::reverse(a.begin(), a.end());
     std::reverse(b.begin(),b.end());
     std::vector<int> res(1,0);
@@ -96,6 +137,10 @@ std::vector<int> LongIntMult::multiplication(std::vector<int> a, std::vector<int
             temp_int = temp/base;
             temp_module = temp%base;
             temp_vec[0]+=temp_module;
+            if(temp_vec[0]/base>0){
+                temp_vec[0]%=base;
+                temp_int+=1;
+            }
             temp_vec.insert(temp_vec.begin(),temp_int);
         }
         for(int k=0;k<i;k++){
@@ -235,7 +280,9 @@ std::vector<int> LongIntMult::karatsuba(std::vector<int> a, std::vector<int> b) 
     std::vector<int> x1 = slice_with_check(a,1);
     std::vector<int> y1 = slice_with_check(b,1);
 
-    int len_of_base = std::min(len_base(x1,x0),len_base(y1,y0));
+
+    int len_of_base = x0.size(); //also works for y0.size()
+
 
     vector_len_check(x1,x0);
     vector_len_check(y1,y0);
