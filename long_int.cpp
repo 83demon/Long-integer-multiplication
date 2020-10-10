@@ -13,8 +13,11 @@
 #include <chrono>
 
 int LongIntMult::base;
-std::string LongIntMult::mult_method; // definition of static method
+Multiplication *LongIntMult::multiplication = nullptr; // definition of static method
 
+LongIntMult Multiplication::multiply(std::vector<int> &a, std::vector<int> &b) {}
+
+/*
 void LongIntMult::stress_test(int len_vector) {
     std::vector<int> a;
     std::vector<int> b;
@@ -68,7 +71,7 @@ void LongIntMult::stress_test(int len_vector) {
         }
 
     }
-}
+}*/
 
 
 void LongIntMult::set_base(int num) {
@@ -76,8 +79,8 @@ void LongIntMult::set_base(int num) {
 }
 
 
-void LongIntMult::set_mult(const char *method) {
-    mult_method = method;
+void LongIntMult::set_mult(Multiplication *mult) {
+    multiplication = mult;
 }
 
 
@@ -90,12 +93,9 @@ std::ostream& operator<<(std::ostream& os, const LongIntMult &res){
 
 
 LongIntMult LongIntMult::operator*(LongIntMult &other) {
-    //std::vector<int> res = multiplication->multiply(this->digits,other.digits);
-    //return LongIntMult(res);
-    if(mult_method=="Karatsuba"){
-        std::vector<int> res = karatsuba(this->digits,other.digits);
-        return LongIntMult(res);
-    }
+    LongIntMult res = multiplication->multiply(this->digits,other.digits);
+    return res;
+
 }
 
 
@@ -264,40 +264,4 @@ std::vector<int> LongIntMult::shift(std::vector<int> a, int pow, int len_of_base
         }
     }
     return a;
-}
-
-
-std::vector<int> LongIntMult::karatsuba(std::vector<int> a, std::vector<int> b) {
-    vector_len_check(a,b);
-    if(a.size()==1 && b.size()==1){
-        int temp = a[0]*b[0];
-        std::vector<int> res = normalize(temp);
-        return res;
-    }
-
-    std::vector<int> x0 = slice_with_check(a,2);
-    std::vector<int> y0 = slice_with_check(b,2);
-    std::vector<int> x1 = slice_with_check(a,1);
-    std::vector<int> y1 = slice_with_check(b,1);
-
-
-    int len_of_base = x0.size(); //also works for y0.size()
-
-
-    vector_len_check(x1,x0);
-    vector_len_check(y1,y0);
-
-
-    std::vector<int> z2 = karatsuba(x1,y1);
-    std::vector<int> z0 = karatsuba(x0,y0);
-    std::vector<int> x1_x0 = add(x1,x0);
-    std::vector<int> y1_y0 = add(y1,y0);
-    std::vector<int> t1 = karatsuba(x1_x0,y1_y0);
-    std::vector<int> t2 = subtract(t1,z2);
-    std::vector<int> z1 = subtract(t2,z0);
-    std::vector<int>z2_b2m = shift(z2,2, len_of_base);
-    std::vector<int> z1_bm = shift(z1,1, len_of_base);
-    std::vector<int> z21 = add(z2_b2m,z1_bm);
-    std::vector<int> res = add(z21, z0);
-    return res;
 }

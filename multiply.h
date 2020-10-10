@@ -5,16 +5,12 @@
 #ifndef LAB_2_MULTIPLY_H
 #define LAB_2_MULTIPLY_H
 #include <vector>
+#include "long_int.h"
 
-class Multiply{
+
+class Karatsuba : public Multiplication{
 public:
-
-    virtual std::vector<int> multiply(std::vector<int> &a, std::vector<int> &b);
-};
-
-class Karatsuba : public Multiply{
-public:
-    std::vector<int> multiply(std::vector<int> &a, std::vector<int> &b);
+    LongIntMult multiply(std::vector<int> &a, std::vector<int> &b) override;
 };
 
 #endif //LAB_2_MULTIPLY_H
