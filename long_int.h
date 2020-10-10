@@ -15,9 +15,9 @@ class LongIntMult{
     static std::string mult_method;
     std::vector<int> normalize(int a) const;
     static std::vector<int> shift(std::vector<int> a, int pow, int len_of_base);
+    std::vector<int> multiplication(std::vector<int> a, std::vector<int> b);
     std::vector<int> add(std::vector<int> a, std::vector<int> b) const;
     std::vector<int> subtract(std::vector<int> a, std::vector<int> b) const;
-    //std::vector<int> multiplication(std::vec);
     static int len_base(std::vector<int> a, std::vector<int> b);
 public:
     static void set_mult(const char *method);
@@ -28,8 +28,11 @@ public:
     LongIntMult (std::vector<int> &res){digits=res;};
     LongIntMult(auto num){operator=(num);};
     LongIntMult(){};
+    void stress_test(int len_vector);
     std::vector<int> karatsuba(std::vector<int> a, std::vector<int> b);
 };
+
+bool equal_elems(std::vector<int> a);
 
 
 #endif //LAB_2_LONG_INT_H
