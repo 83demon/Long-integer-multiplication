@@ -12,6 +12,9 @@
 
 std::string LongIntMult::mult_method; // definition of static method
 
+void LongIntMult::stress_test(int len_vector) {
+    
+}
 
 void LongIntMult::set_mult(const char *method) {
     mult_method = method;
@@ -77,6 +80,36 @@ int LongIntMult::len_base(std::vector<int> a, std::vector<int> b){
     else{
         res = std::min(a.size(),b.size());
     }
+    return res;
+}
+
+
+std::vector<int> LongIntMult::multiplication(std::vector<int> a, std::vector<int> b) {
+    std::reverse(a.begin(), a.end());
+    std::reverse(b.begin(),b.end());
+    std::vector<int> res(1,0);
+    std::vector<int> temp_vec(1,0);
+    int temp, temp_int, temp_module;
+    for(int i=0;i<a.size();i++){
+        for(int j=0;j<b.size();j++){
+            temp = a[i]*b[j];
+            temp_int = temp/base;
+            temp_module = temp%base;
+            temp_vec[0]+=temp_module;
+            temp_vec.insert(temp_vec.begin(),temp_int);
+        }
+        for(int k=0;k<i;k++){
+            temp_vec.push_back(0);
+        }
+        res = add(res,temp_vec);
+        temp_vec = {0};
+    }
+
+    bool equals = equal_elems(res);
+
+    if(res[0]==0 && equals){res = {0};}
+    else{while(res[0]==0){res.erase(res.begin());}}
+
     return res;
 }
 
