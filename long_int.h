@@ -4,8 +4,14 @@
 
 #ifndef LAB_2_LONG_INT_H
 #define LAB_2_LONG_INT_H
+#include "vector_tools.h"
 #include <vector>
-#include <string>
+#include <random>
+#include <iostream>
+#include <ostream>
+#include <cstring>
+#include <algorithm>
+#include <chrono>
 
 
 class LongIntMult;
@@ -39,9 +45,6 @@ public:
     void stress_test(int len_vector);
     friend class Karatsuba;
 };
-
-
-bool equal_elems(std::vector<int> a);
 
 
 #endif //LAB_2_LONG_INT_H

@@ -4,11 +4,11 @@
 
 #ifndef LAB_2_MULTIPLY_H
 #define LAB_2_MULTIPLY_H
-#include <vector>
 #include "long_int.h"
 
 
 class Karatsuba : public Multiplication{
+    int len_to_split = 2;
 public:
     LongIntMult multiply(std::vector<int> &a, std::vector<int> &b) override;
 };

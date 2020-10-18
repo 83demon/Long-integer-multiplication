@@ -1,7 +1,6 @@
 //
 // Created by vo1ku on 08.10.2020.
 //
-#include "vector_tools.h"
 #include "multiply.h"
 
 
@@ -9,24 +8,20 @@
 LongIntMult Karatsuba::multiply(std::vector<int> &a, std::vector<int> &b) {
     LongIntMult C;
 
-
-    vector_len_check(a,b);
-    //std::cout<<depth<<std::endl;
     if(a.size()==1 && b.size()==1){
         int temp = a[0]*b[0];
         std::vector<int> res = C.normalize(temp);
         return LongIntMult(res);
     }
 
-    std::vector<int> x0 = slice_with_check(a,2);
-    std::vector<int> y0 = slice_with_check(b,2);
-    std::vector<int> x1 = slice_with_check(a,1);
-    std::vector<int> y1 = slice_with_check(b,1);
+    vector_len_check(a,b,len_to_split);
+
+    std::vector<int> x0 = partial_split(a,2,len_to_split);
+    std::vector<int> y0 = partial_split(b,2,len_to_split);
+    std::vector<int> x1 = partial_split(a,1,len_to_split);
+    std::vector<int> y1 = partial_split(b,1,len_to_split);
 
     int len_of_base = x0.size(); //also works for y0.size()
-
-    vector_len_check(x1,x0);
-    vector_len_check(y1,y0);
 
 
     LongIntMult z2_obj = multiply(x1,y1);

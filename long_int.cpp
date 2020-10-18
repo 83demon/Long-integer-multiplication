@@ -3,19 +3,12 @@
 //
 
 #include "long_int.h"
-#include "vector_tools.h"
-#include <vector>
-#include <random>
-#include <iostream>
-#include <ostream>
-#include <cstring>
-#include <algorithm>
-#include <chrono>
+
 
 int LongIntMult::base;
 Multiplication *LongIntMult::multiplication = nullptr; // definition of static method
 
-LongIntMult Multiplication::multiply(std::vector<int> &a, std::vector<int> &b) {}
+LongIntMult Multiplication::multiply(std::vector<int> &a, std::vector<int> &b) {return LongIntMult();}
 
 
 void LongIntMult::stress_test(int len_vector) {
@@ -102,26 +95,69 @@ LongIntMult LongIntMult::operator*(LongIntMult &other) {
 
 
 void LongIntMult::operator=(int num){
+    std::string temp_zero;
     std::string str_repr = std::to_string(num);
     std::string str_base = std::to_string(base);
+    int i = 0;
     int base_len = str_base.size()-1; // only works for 10**x base
     auto input_len = str_repr.size();
     std::string temp;
-    for(auto i=0;i<input_len;i+=base_len){
+    char zero = '0';
+    for(i;i<input_len;i+=base_len){
         temp = std::string(str_repr,i,base_len);
+        if(temp[0]==zero){
+            if(equal_elems(temp)) {
+                for (int k = 0; k < temp.size(); k++) {
+                    temp_zero.push_back(temp[k]);
+                    digits.push_back(std::stoi(temp_zero));
+                    temp_zero.clear();
+                }
+                continue;
+            }
+            else{
+                while(temp[0]==zero){
+                    temp_zero.push_back(temp[0]);
+                    digits.push_back(std::stoi(temp_zero));
+                    temp_zero.clear();
+                    temp.erase(temp.begin());
+                }
+            }
+        }
         digits.push_back(std::stoi(temp));
     }
 }
 
 
 
+
 void LongIntMult::operator=(const char *num){
     std::string str_base = std::to_string(base);
+    std::string temp_zero;
     int base_len = str_base.size()-1; // only works for 10**x base
     auto input_len = strlen(num);
     std::string temp;
-    for(auto i=0;i<input_len;i+=base_len){
+    char zero = '0';
+    int i;
+    for(i;i<input_len;i+=base_len){
         temp = std::string(num,i,base_len);
+        if(temp[0]==zero){
+            if(equal_elems(temp)) {
+                for (int k = 0; k < temp.size(); k++) {
+                    temp_zero.push_back(temp[k]);
+                    digits.push_back(std::stoi(temp_zero));
+                    temp_zero.clear();
+                }
+                continue;
+            }
+            else{
+                while(temp[0]==zero){
+                    temp_zero.push_back(temp[0]);
+                    digits.push_back(std::stoi(temp_zero));
+                    temp_zero.clear();
+                    temp.erase(temp.begin());
+                }
+            }
+        }
         digits.push_back(std::stoi(temp));
     }
 }

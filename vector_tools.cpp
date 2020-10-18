@@ -3,11 +3,9 @@
 //
 
 #include "vector_tools.h"
-#include <vector>
-#include <cmath>
+
 
 bool equal_elems(std::vector<int> a){
-
     bool res = true;
     int fist_occur = a[0];
     for(int i : a){
@@ -18,41 +16,50 @@ bool equal_elems(std::vector<int> a){
     return res;
 }
 
-void vector_len_check(std::vector<int> &a, std::vector<int> &b){
-    int len_diff = abs(a.size()-b.size());
-    if(a.size()>b.size()){
-        for(int i=0;i<len_diff;i++){
-            b.insert(b.begin(),0);
-        }
-    }
-    else if(a.size()<b.size()){
-        for(int i=0;i<len_diff;i++){
-            a.insert(a.begin(),0);
-        }
-    }
-}
 
-std::vector<int> slice_with_check(std::vector<int> const &v, int part){
-    std::vector<int> res;
-
-    if(v.size()%2==0){
-        if(part==1){
-            res = vector_slice(v,0,v.size()/2);
-        }
-        else if(part==2){
-            res =  vector_slice(v,v.size()/2, v.size());
-        }
-    }
-    else{
-        if(part==1){
-            res =  vector_slice(v,0,v.size()/2+1);
-        }
-        else if(part==2){
-            res = vector_slice(v,v.size()/2+1, v.size());
+bool equal_elems(std::string a){
+    bool res = true;
+    int fist_occur = a[0];
+    for(int i : a){
+        if(fist_occur!=i){
+            res = false;
         }
     }
     return res;
 }
+
+
+void vector_len_check(std::vector<int> &a, std::vector<int> &b, int len_to_split){
+    if(a.size()==b.size() && a.size()%len_to_split==0 && b.size()%len_to_split==0){return;}
+    int max_len = std::max(a.size(),b.size());
+    int j=-0;
+    do{
+        j+=1;
+    }while (max_len>j*len_to_split);
+    int new_len = j*len_to_split;
+
+    for(int i=0;a.size()<new_len;i++){
+        a.insert(a.begin(),0);
+    }
+    for(int i=0;b.size()<new_len;i++){
+        b.insert(b.begin(),0);
+    }
+}
+
+
+std::vector<int> partial_split(std::vector<int> const &v, int part, int m){
+    // m==len to splits
+    std::vector<int> res, temp_index;
+    int i=0;
+    while(temp_index.size()!=m){
+        temp_index.push_back(i);
+        i+=(v.size())/m;
+    }
+    int res_start = temp_index[part-1], res_stop = res_start+(v.size())/m;
+    res = vector_slice(v,res_start,res_stop);
+    return res;
+}
+
 
 std::vector<int> vector_slice(std::vector<int> const &v, int m, int n){
     auto first = v.cbegin() + m;
