@@ -6,13 +6,18 @@
 #include <cmath>
 
 unsigned long long binary_pow(unsigned long long a, unsigned long long n, unsigned  long long m){
-    if (n == 0){
-        return 1;}
-    if (n % 2 == 1){
-        return (a * binary_pow(a, n-1, m)) % m;}
-    else{
-        unsigned long long k = binary_pow(a, n/2, m);
-        return (k*k)%m;}
+    if(m==1){return 0;}
+    if((m-1)>ULLONG_MAX/(m-1)){std::cout<<"overflow"<<std::endl;}
+    unsigned long long res=1;
+    a=a%m;
+    while(n>0){
+        if(n%2==1){
+            res=(res*a)%m;
+        }
+        n=n>>1;
+        a=(a*a)%m;
+    }
+    return res;
 }
 
 
@@ -45,3 +50,14 @@ int kronecker_jacobi_symbol(long long n, long long k){
 }
 
 
+std::vector<long long> shifting_pow(unsigned long long a,int base){
+    std::vector<long long> res;
+    long long r=0,d;
+    while(a/(int(pow(base,r)))%2==0){
+        r+=1;
+    }
+    d = a/(int(pow(base,r)));
+    res.push_back(r);
+    res.push_back(d);
+    return res;
+}

@@ -9,6 +9,7 @@
 
 unsigned long long binary_pow(unsigned long long a, unsigned long long n, unsigned long long m);
 int kronecker_jacobi_symbol(long long a, long long n);
+std::vector<long long> shifting_pow(unsigned long long a, int pow_base);
 
 
 #endif //LAB_2_PRIMALITY_H
