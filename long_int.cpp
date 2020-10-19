@@ -148,7 +148,7 @@ void LongIntMult::operator=(const char *num){
     auto input_len = strlen(num);
     std::string temp;
     char zero = '0';
-    int i;
+    int i=0;
     for(i;i<input_len;i+=base_len){
         temp = std::string(num,i,base_len);
         if(temp[0]==zero){
@@ -171,6 +171,55 @@ void LongIntMult::operator=(const char *num){
         }
         digits.push_back(std::stoi(temp));
     }
+}
+
+
+LongIntMult LongIntMult::operator- (LongIntMult &other){
+    LongIntMult res = subtract(this->digits, other.digits);
+    return res;
+}
+
+
+LongIntMult LongIntMult::operator+ (LongIntMult &other){
+    LongIntMult res = add(this->digits, other.digits);
+    return res;
+}
+
+
+bool operator==(const LongIntMult &a, const LongIntMult &b){
+    return a.digits==b.digits;
+}
+
+
+bool operator!=(const LongIntMult &a, const LongIntMult &b){
+    return !operator==(a,b);
+}
+
+
+bool operator<(const LongIntMult &a, const LongIntMult&b){
+    int i = 0;
+    if(a.digits.size()!=b.digits.size()){
+        return a.digits.size() < b.digits.size();
+    }
+    else {
+        while(a.digits[i]==b.digits[i] && i<b.digits.size()){i++;}
+        return a.digits[i]<b.digits[i];
+    }
+}
+
+
+bool operator>(const LongIntMult &a, const LongIntMult&b){
+    return operator< (b,a);
+}
+
+
+bool operator<=(const LongIntMult &a, const LongIntMult&b){
+    return !operator> (a,b);
+}
+
+
+bool operator>=(const LongIntMult &a, const LongIntMult&b){
+    return !operator< (a,b);
 }
 
 
@@ -313,4 +362,15 @@ std::vector<int> LongIntMult::shift(std::vector<int> a, int pow, int len_of_base
         }
     }
     return a;
+}
+
+
+long long LongIntMult::join(std::vector<int> a) {
+    //if a is a representation of num not greater than LLONG_MAX
+    std::reverse(a.begin(),a.end());
+    long long num = 0;
+    for(int i=a.size()-1;i>=0;i--){
+        num+=a[i]*pow(base,i);
+    }
+    return num;
 }
