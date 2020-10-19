@@ -1,5 +1,5 @@
 #include <iostream>
-#include "multiply.h"
+#include "karatsuba.h"
 #include "primality.h"
 #include "fermat.h"
 #include "miller_rabin.h"
@@ -7,23 +7,20 @@
 
 
 int main() {
-    LongIntMult::set_base(10000); //no more, than 10 000
+    LongIntMult::set_base(10); //no more, than 10 000
     LongIntMult::set_mult(new Karatsuba());
     LongIntMult::set_prime(new Miller_Rabin());
 
-    LongIntMult a,b,c;
-    a = "149";
-    b = 704;
-    bool res =c.prime(463762337,2);
-    int k = kronecker_jacobi_symbol(43,683);
-    unsigned long long n = binary_pow(43,341,683);
-    std::cout<<res;
-    //c = a*b;
-    //std::cout<<c;
+    LongIntMult a,b,c,d,e;
+    a = "1684";
+    b = "46";
+    c = a*b;
+    d=d.naive_multiplication(a.digits,b.digits);
+    e=d-c;
+    std::cout<<e;
+    //bool res =c.prime(383500561,2);
+    //std::cout<<res;
     //c.stress_test(300);
-
-
-
 
 
     return 0;
