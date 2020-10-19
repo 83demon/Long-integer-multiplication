@@ -7,9 +7,10 @@
 
 int LongIntMult::base;
 Multiplication *LongIntMult::multiplication = nullptr; // definition of static method
+Prime *LongIntMult::primality = nullptr;
 
 LongIntMult Multiplication::multiply(std::vector<int> &a, std::vector<int> &b) {return LongIntMult();}
-
+bool Prime::prime(unsigned long long a, unsigned long long accuracy){return true;};
 
 void LongIntMult::stress_test(int len_vector) {
     std::vector<int> a;
@@ -69,6 +70,11 @@ void LongIntMult::stress_test(int len_vector) {
 }
 
 
+void LongIntMult::set_prime(Prime *prime) {
+    primality = prime;
+}
+
+
 void LongIntMult::set_base(int num) {
     base = num;
 }
@@ -88,8 +94,13 @@ std::ostream& operator<<(std::ostream& os, const LongIntMult &res){
 
 
 LongIntMult LongIntMult::operator*(LongIntMult &other) {
-    LongIntMult res = multiplication->multiply(this->digits,other.digits);
-    return res;
+    return multiplication->multiply(this->digits,other.digits);
+
+}
+
+
+bool LongIntMult::prime(unsigned long long a, unsigned long long accuracy){
+    return primality->prime(a,accuracy);
 
 }
 
