@@ -23,9 +23,16 @@ public:
 };
 
 
+class Prime{
+public:
+    virtual bool prime(unsigned long long a, unsigned long long accuracy);
+};
+
+
 class LongIntMult{
     static int base;
     static Multiplication *multiplication;
+    static Prime *primality;
     std::vector<int> digits;
     std::vector<int> normalize(int a) const;
     static std::vector<int> shift(std::vector<int> a, int pow, int len_of_base);
@@ -34,10 +41,12 @@ class LongIntMult{
     std::vector<int> subtract(std::vector<int> a, std::vector<int> b) const;
 public:
     static void set_base(int base);
+    static void set_prime(Prime *prime_);
     static void set_mult(Multiplication *multiplication);
     friend std::ostream& operator<<(std::ostream& os, const LongIntMult &res);
     void operator= (const char *num);
     void operator= (int num);
+    bool prime(unsigned long long a, unsigned long long accuracy);
     LongIntMult operator* (LongIntMult &other);
     LongIntMult (std::vector<int> &res){digits=res;};
     LongIntMult(auto num){operator=(num);};
