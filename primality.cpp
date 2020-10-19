@@ -3,6 +3,7 @@
 //
 
 #include "primality.h"
+#include <cmath>
 
 unsigned long long binary_pow(unsigned long long a, unsigned long long n, unsigned  long long m){
     if (n == 0){
@@ -15,15 +16,32 @@ unsigned long long binary_pow(unsigned long long a, unsigned long long n, unsign
 }
 
 
-bool Fermat::prime(unsigned long long n, unsigned long long accuracy) {
-    if(n<3){
-        return true;
-    }
-    for(unsigned long long i=0;i<accuracy;i++) {
-        unsigned long long a = (rand() % (n - 2) + 2);
-        if(binary_pow(a,n-1,n)!=1){
-            return false;
+int kronecker_jacobi_symbol(long long n, long long k){
+    //n should be greater than 0
+    n = n%k;
+    long long t = 1;
+    while(n!=0){
+        while(n%2==0){
+            n/=2;
+            long long r = k%8;
+            if(r==3 || r==5){
+                t = -t;
+            }
         }
+        long long temp = n;
+        n = k;
+        k = temp;
+        if(n%4==3 && k%4==3){
+            t=-t;
+        }
+        n=n%k;
     }
-    return true;
+    if(k==1){
+        return t;
+    }
+    else{
+        return 0;
+    }
 }
+
+

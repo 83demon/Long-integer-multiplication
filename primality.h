@@ -8,10 +8,7 @@
 #include <random>
 
 unsigned long long binary_pow(unsigned long long a, unsigned long long n, unsigned long long m);
+int kronecker_jacobi_symbol(long long a, long long n);
 
-class Fermat : public Prime{
-public:
-    bool prime(unsigned long long a, unsigned long long accuracy) override;
-};
 
 #endif //LAB_2_PRIMALITY_H
