@@ -140,7 +140,6 @@ void LongIntMult::operator=(int num){
 
 
 
-
 void LongIntMult::operator=(const char *num){
     std::string str_base = std::to_string(base);
     std::string temp_zero;

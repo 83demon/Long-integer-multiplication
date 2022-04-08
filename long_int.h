@@ -33,14 +33,15 @@ class LongIntMult{
     static int base;
     static Multiplication *multiplication;
     static Prime *primality;
+    std::vector<int> digits;
+    std::vector<int> naive_multiplication(std::vector<int> a, std::vector<int> b);
     long long join(std::vector<int> a);
     std::vector<int> normalize(int a) const;
     static std::vector<int> shift(std::vector<int> a, int pow, int len_of_base);
     std::vector<int> add(std::vector<int> a, std::vector<int> b) const;
     std::vector<int> subtract(std::vector<int> a, std::vector<int> b) const;
 public:
-    std::vector<int> digits;
-    std::vector<int> naive_multiplication(std::vector<int> a, std::vector<int> b);
+
     static void set_base(int base);
     static void set_prime(Prime *prime_);
     static void set_mult(Multiplication *multiplication);
